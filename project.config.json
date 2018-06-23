@@ -1,0 +1,72 @@
+{
+	"miniprogramRoot": "./example",
+	"pluginRoot": "./dist",
+	"compileType": "plugin",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"appid": "wxe91674e4ea529231",
+	"projectname": "wxapp-canvas",
+	"libVersion": "2.1.1",
+	"packOptions": {
+		"ignore": [
+			{
+				"type": "folder",
+				"value": "node_modules"
+			},
+			{
+				"type": "folder",
+				"value": "src"
+			},
+			{
+				"type": "file",
+				"value": ".babelrc"
+			},
+			{
+				"type": "file",
+				"value": ".editorconfig"
+			},
+			{
+				"type": "file",
+				"value": ".eslintignore"
+			},
+			{
+				"type": "file",
+				"value": ".eslintrc.js"
+			},
+			{
+				"type": "file",
+				"value": ".gitignore"
+			},
+			{
+				"type": "file",
+				"value": "CHANGELOG.md"
+			},
+			{
+				"type": "file",
+				"value": "gulpfile.js"
+			},
+			{
+				"type": "file",
+				"value": "LICENSE"
+			},
+			{
+				"type": "file",
+				"value": "package-lock.json"
+			},
+			{
+				"type": "file",
+				"value": "package.json"
+			},
+			{
+				"type": "file",
+				"value": "README.md"
+			}
+		]
+	},
+	"condition": {}
+}

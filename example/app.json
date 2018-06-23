@@ -1,0 +1,11 @@
+{
+    "pages": [
+        "pages/index/index"
+    ],
+    "plugins": {
+        "wxappCanvas": {
+            "version": "dev",
+            "provider": "wxe91674e4ea529231"
+        }
+    }
+}

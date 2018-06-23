@@ -1,0 +1,22 @@
+{
+    "presets": [
+        "stage-3",
+        ["env", {
+            "targets": {
+                "browsers": [
+                    "last 2 versions"
+                ]
+            },
+            "modules": "commonjs"
+        }]
+    ],
+    "plugins": [
+        ["transform-runtime", {
+            "helpers": true,
+            "polyfill": false,
+            "regenerator": true,
+            "moduleName": "/babel-runtime"
+        }],
+        "external-helpers"
+    ]
+}

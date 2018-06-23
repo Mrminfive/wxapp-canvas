@@ -1,0 +1,7 @@
+
+<view>fdsfas</view>
+<button bindtap="bindtap">点击</button>
+<wxapp-canvas id="wxapp-canvas" bindref="bindRefs">
+    <wxapp-canvas-div id="wxapp-canvas-div"></wxapp-canvas-div>
+</wxapp-canvas>
+<m-canvas-text id="canvas-text"></m-canvas-text>
