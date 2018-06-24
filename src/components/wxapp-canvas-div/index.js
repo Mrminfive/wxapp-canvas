@@ -10,9 +10,21 @@
 import behaviors from '../../behaviors/index.js';
 
 Component({
+    externalClasses: ['class-name'],
+
     behaviors: [
         behaviors.element
     ],
+
+    relations: {
+        'element': {
+            type: 'ancestor',
+            target: behaviors.wxappCanvasBehavior,
+            linked(target) {
+                this.$canvas = target;
+            }
+        }
+    },
 
     data: {
         name: 'wxapp-canvas-div'
@@ -22,20 +34,24 @@ Component({
         /**
          * 用于渲染内容
          *
+         * @param {Object} ctx canvas 上下文
+         * @param {Object} rect canvas boundingClientRect
          * @api public
          */
-        render() {
+        render(ctx, rect) {
             console.log('bbb');
         },
 
         /**
          * 用于预加载资源
          *
+         * @param {Object} rect canvas boundingClientRect
          * @return {Promise}
          * @api public
          */
-        async preload() {
-            return Promise.resolve();
+        async preload(rect) {
+            await this._preload(rect);
+            console.log('div');
         }
     }
 });

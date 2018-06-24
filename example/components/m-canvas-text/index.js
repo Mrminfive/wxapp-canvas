@@ -7,12 +7,21 @@
  * @lastDate: 2018-06-24
  */
 
-const { element } = requirePlugin('wxappCanvas');
+const { behaviors } = requirePlugin('wxappCanvas');
 
 Component({
+    externalClasses: ['class-name'],
+
     behaviors: [
-        element
+        behaviors.element
     ],
+
+    relations: {
+        'element': {
+            type: 'ancestor',
+            target: behaviors.wxappCanvasBehavior
+        }
+    },
 
     methods: {
         /**

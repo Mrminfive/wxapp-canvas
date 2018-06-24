@@ -7,10 +7,10 @@
  * @lastDate: 2018-06-24
  */
 
-import utils from './utils.js';
+import * as utils from './utils.js';
 import behaviors from './behaviors/index.js';
 
-export default {
-    ...utils,
-    ...behaviors
+export {
+    utils,
+    behaviors
 };

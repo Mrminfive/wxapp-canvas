@@ -1,3 +1,2 @@
-
 <!-- 自定义节点需要设置一个空 view -->
-<view id="canvas-element" class="class-name"></view>
+<view id="canvas-element" class="class-name canvas-element"></view>

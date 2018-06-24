@@ -136,12 +136,30 @@ async function saveImageToPhotosAlbum(filePath) {
     });
 }
 
-export default {
+/**
+ * 异步迭代数组
+ *
+ * @param {Array} arr 需要迭代的数组
+ * @param {AsyncFunction} callback 操作函数
+ * @param {Any} callback.value 当前迭代值
+ * @param {Number} callback.index 当前迭代索引
+ */
+async function asyncEach(arr, callback) {
+    let idx = 0;
+
+    while (idx < arr.length) {
+        await callback(arr[idx], idx);
+        idx++;
+    }
+}
+
+export {
     errorInfo,
     checkIsWxFliePath,
     checkIsNetworkFile,
     promisify,
     promisifyList,
     downloadFile,
-    saveImageToPhotosAlbum
+    saveImageToPhotosAlbum,
+    asyncEach
 };

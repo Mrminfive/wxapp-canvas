@@ -1,0 +1,21 @@
+
+.m-wxapp-canvas {
+    display: block;
+    width: 100vw;
+    height: 50vh;
+}
+
+.m-wxapp-canvas-div {
+    position: absolute;
+    top: calc(100% - 30rpx * 2);
+    left: 0;
+    display: flex;
+    width: 100rpx;
+    height: 100rpx;
+    border: 20rpx solid red;
+    background: #ddd;
+}
+
+.m-canvas-text {
+    
+}

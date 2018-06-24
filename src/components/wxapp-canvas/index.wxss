@@ -1,0 +1,4 @@
+
+.wxapp-canvas {
+    position: relative;
+}

@@ -1,9 +1,14 @@
 
 Page({
+    data: {
+        csstext: `
+            background-color: #432434;
+            content: "${'这是我的内容啊'}"
+        `
+    },
+
     onReady() {
-        console.log(this)
-        console.log('canvas-text', this.selectComponent('#canvas-text'));
-        console.log('wxapp-canvas', this.selectComponent('#wxapp-canvas'))
+
     },
 
     bindtap() {

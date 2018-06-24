@@ -1,0 +1,9 @@
+
+<canvas
+    id="wxapp-canvas"
+    class="class-name wxapp-canvas"
+    canvas-id="wxapp-canvas"
+    style="{{width ? 'width: ' + width + ';' : ''}}{{height ? 'height: ' + height + ';' : ''}}"
+    disable-scroll>
+    <slot></slot>
+</canvas>
