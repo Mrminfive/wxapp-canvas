@@ -1,5 +1,5 @@
 
-import element from './element.js';
+import element from './element/index.js';
 import wxappCanvasBehavior from './wxapp-canvas-behavior.js';
 
 export default {

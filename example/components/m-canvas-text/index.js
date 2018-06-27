@@ -39,9 +39,11 @@ Component({
          * @return {Promise}
          * @api public
          */
-        preload() {
-            // do some thing
-            return Promise.resolve();
+        preload(rect, adaptationText) {
+            return this._preload(rect, adaptationText)
+                .then(() => {
+                    // do some thing
+                });
         }
     }
 });

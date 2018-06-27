@@ -12,7 +12,17 @@ Page({
     },
 
     bindtap() {
-        this.$refs['wxapp-canvas'].fun();
+        wx.showLoading({
+            title: '拼命绘制中'
+        });
+        this.$refs['wxapp-canvas']
+            .draw()
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(() => {
+                wx.hideLoading();
+            });
     },
 
     bindRefs(event) {

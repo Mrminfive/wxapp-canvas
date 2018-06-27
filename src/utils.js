@@ -153,6 +153,27 @@ async function asyncEach(arr, callback) {
     }
 }
 
+/**
+ * 设置对象深层属性
+ *
+ * @param {Object} obj 需要设置的对象
+ * @param {String} key 需要设置的 key 值，用 . 代表嵌套层级
+ * @return {Object} 设置好的对象
+ */
+function setObjectKey(obj, key, val) {
+    let keys = key.split('.');
+
+    return keys.reduce((res, key, idx) => {
+        if (idx === keys.length - 1) {
+            res[key] = val;
+            return obj;
+        } else {
+            res[key] = res[key] || {};
+            return res[key];
+        }
+    }, obj);
+}
+
 export {
     errorInfo,
     checkIsWxFliePath,
@@ -161,5 +182,6 @@ export {
     promisifyList,
     downloadFile,
     saveImageToPhotosAlbum,
-    asyncEach
+    asyncEach,
+    setObjectKey
 };

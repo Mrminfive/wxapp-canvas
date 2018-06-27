@@ -1,9 +1,15 @@
 
-<canvas
-    id="wxapp-canvas"
-    class="class-name wxapp-canvas"
-    canvas-id="wxapp-canvas"
-    style="{{width ? 'width: ' + width + ';' : ''}}{{height ? 'height: ' + height + ';' : ''}}"
-    disable-scroll>
-    <slot></slot>
-</canvas>
+<view class="class-name wxapp-canvas__wrap">
+    <canvas
+        id="wxapp-canvas"
+        class="wxapp-canvas"
+        canvas-id="wxapp-canvas"
+        style="{{width ? 'width: ' + width + 'px;' : ''}}{{height ? 'height: ' + height + 'px;' : ''}}"
+        disable-scroll></canvas>
+    
+    <view id="wxapp-canvas-view" class="class-name wxapp-canvas-view">
+        <slot></slot>
+    </view>    
+</view>
+
+<canvas canvas-id="wxapp-aid-canvas" class="wxapp-aid-canvas"></canvas>

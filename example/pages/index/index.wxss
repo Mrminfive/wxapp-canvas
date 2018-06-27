@@ -7,15 +7,22 @@
 
 .m-wxapp-canvas-div {
     position: absolute;
-    top: calc(100% - 30rpx * 2);
+    top: 40rpx;
     left: 0;
     display: flex;
-    width: 100rpx;
-    height: 100rpx;
+    width: 400rpx;
+    height: 200rpx;
+    font-size: 50%;
+    line-height: 1.3;
     border: 20rpx solid red;
-    background: #ddd;
+    background: #ddd linear-gradient(to top right, #000, #f00 50%, #090) center repeat-y;
+    background-size: calc(100% - 20rpx) 50rpx;
+    background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=6551879cc94f70b3bb7d48c104994a19&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0dd7912397dda1440071ec66b8b7d0a20df486ee.jpg');
+    padding-top: 30px;
+    border-radius: 60%;
+    box-sizing: border-box;
 }
 
 .m-canvas-text {
-    
+    background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=2eda614bb166ec26838f99b2bc610996&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fe4dde71190ef76c60ecc162c9716fdfaaf51679f.jpg');
 }

@@ -23,9 +23,6 @@ Component({
             linked(target) {
                 this._elements.push(target);
                 console.log('linked: ', target);
-                setTimeout(() => {
-                    target._getComputedStyle();
-                });
             },
             unlinked(target) {
                 this._elements = this._elements.filter(element => element.__wxExparserNodeId__ !== target.__wxExparserNodeId__);
@@ -75,8 +72,9 @@ Component({
                     let query = wx.createSelectorQuery().in(this);
 
                     query
-                        .select('#wxapp-canvas')
+                        .select('#wxapp-canvas-view')
                         .boundingClientRect(res => {
+                            console.log(res);
                             this._canvasRect = res;
                             this.setData({
                                 width: res.width,
@@ -95,6 +93,7 @@ Component({
          */
         async _initCanvas() {
             this._ctx = wx.createCanvasContext('wxapp-canvas', this);
+            this._aidCtx = wx.createCanvasContext('wxapp-aid-canvas', this);
             await this._getCanvasRect(true);
             this.data.preload && await this.preload();
         },
@@ -110,7 +109,11 @@ Component({
             await Promise.all(
                 this._elements
                     .filter(element => element.preload)
-                    .map(element => element.preload({ ...this._canvasRect }))
+                    .map(element => {
+                        console.log(element);
+                        return element;
+                    })
+                    .map(element => element.preload({ ...this._canvasRect }, this.adaptationText.bind(this)))
             );
         },
 
@@ -147,6 +150,47 @@ Component({
          */
         getContext() {
             return this._ctx;
+        },
+
+        /**
+         * 适配文本
+         *
+         * @param {String} str 需要适配的文本
+         * @param {Object} font 文本样式
+         * @param {Number} maxWidth 最大容器宽度
+         * @return {Array} 分段好的文本
+         * @api public
+         */
+        adaptationText(str, font, maxWidth) {
+            let ctx = this._aidCtx;
+
+            ctx.font = font;
+
+            function calc(str) {
+                let len = str.length;
+                let idx = 0;
+                let result = [];
+
+                while (idx < len) {
+                    let nowStr = str.substring(0, idx + 1);
+                    let strWidth = ctx.measureText(nowStr).width;
+
+                    if (strWidth <= maxWidth) {
+                        result[0] = {
+                            text: nowStr,
+                            width: strWidth
+                        };
+                    } else {
+                        break;
+                    }
+
+                    idx++;
+                }
+
+                return idx === len ? result : result.concat(calc(str.substring(idx)));
+            }
+
+            return calc(str);
         }
     }
 });
