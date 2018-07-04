@@ -54,7 +54,7 @@ function checkIsNetworkFile(url) {
  * @return {Promise}
  */
 function promisify(method) {
-    return function(option = {}) {
+    return function(option = {}, ...args) {
         return new Promise((resolve, reject) => {
             let md = wx[method];
 
@@ -69,7 +69,7 @@ function promisify(method) {
                         option.fail && typeof option.fail === 'function' && option.fail();
                         reject(...args);
                     }
-                });
+                }, ...args);
             } else {
                 errorInfo('wx method must be a function');
             }
@@ -94,6 +94,19 @@ function promisifyList(methods = []) {
         errorInfo('wx method list must be a array');
     }
 };
+
+/**
+ * 下载图片
+ *
+ * @param {String} src 图片路径
+ * @return {Promise}
+ */
+async function downloadImage(src) {
+    // let tempPath = await downloadFile(src);
+    return promisify('getImageInfo')({
+        src
+    });
+}
 
 /**
  * 下载文件
@@ -129,10 +142,10 @@ async function downloadFile(url) {
  * @return {Promise}
  */
 async function saveImageToPhotosAlbum(filePath) {
-    const url = await downloadFile(filePath);
+    const info = await downloadImage(filePath);
 
     return await promisify('saveImageToPhotosAlbum')({
-        filePath: url
+        filePath: info.path
     });
 }
 
@@ -174,6 +187,84 @@ function setObjectKey(obj, key, val) {
     }, obj);
 }
 
+/**
+ * 绘制一个圆角四边形
+ *
+ * @param {Object} ctx canvas 上下文
+ * @param {Number} lineWidth 边宽
+ * @param {Number} startX 左上角X轴坐标
+ * @param {Number} startY 左上角Y轴坐标
+ * @param {Number} width 宽度
+ * @param {Number} height 高度
+ * @param {Object} borderRadius 边角
+ * @param {Array} borderRadius['top-left']
+ * @param {Array} borderRadius['top-right']
+ * @param {Array} borderRadius['bottom-right']
+ * @param {Array} borderRadius['bottom-left']
+ */
+function drawRing(ctx, lineWidth, startX, startY, width, height, borderRadius) {
+    const KAPPA = 0.5522848;
+
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(
+        startX + borderRadius['top-left'][0],
+        startY
+    );
+    ctx.lineTo(
+        startX + width - borderRadius['top-right'][0],
+        startY
+    );
+    ctx.bezierCurveTo(
+        startX + width - borderRadius['top-right'][0] * (1 - KAPPA),
+        startY,
+        startX + width,
+        startY + borderRadius['top-right'][1] * (1 - KAPPA),
+        startX + width,
+        startY + borderRadius['top-right'][1]
+    );
+    ctx.lineTo(
+        startX + width,
+        startY + height - borderRadius['bottom-right'][1]
+    );
+    ctx.bezierCurveTo(
+        startX + width,
+        startY + height - borderRadius['bottom-right'][1] * (1 - KAPPA),
+        startX + width - borderRadius['bottom-right'][0] * (1 - KAPPA),
+        startY + height,
+        startX + width - borderRadius['bottom-right'][0],
+        startY + height
+    );
+    ctx.lineTo(
+        startX + borderRadius['bottom-left'][0],
+        startY + height
+    );
+    ctx.bezierCurveTo(
+        startX + borderRadius['bottom-left'][0] * (1 - KAPPA),
+        startY + height,
+        startX,
+        startY + height - borderRadius['bottom-left'][1] * (1 - KAPPA),
+        startX,
+        startY + height - borderRadius['bottom-left'][1]
+    );
+    ctx.lineTo(
+        startX,
+        startY + borderRadius['top-left'][1]
+    );
+    ctx.bezierCurveTo(
+        startX,
+        startY + borderRadius['top-left'][1] * (1 - KAPPA),
+        startX + borderRadius['top-left'][0] * (1 - KAPPA),
+        startY,
+        startX + borderRadius['top-left'][0],
+        startY
+    );
+    ctx.closePath();
+    // TODO：这里加上透明描边，以解决路径错乱问题（不是很理解）
+    ctx.strokeStyle = 'transparent';
+    ctx.stroke();
+}
+
 export {
     errorInfo,
     checkIsWxFliePath,
@@ -181,7 +272,9 @@ export {
     promisify,
     promisifyList,
     downloadFile,
+    downloadImage,
     saveImageToPhotosAlbum,
     asyncEach,
-    setObjectKey
+    setObjectKey,
+    drawRing
 };

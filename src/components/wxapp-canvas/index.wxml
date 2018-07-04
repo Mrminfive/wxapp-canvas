@@ -12,4 +12,7 @@
     </view>    
 </view>
 
-<canvas canvas-id="wxapp-aid-canvas" class="wxapp-aid-canvas"></canvas>
+<canvas
+    canvas-id="wxapp-aid-canvas"
+    class="wxapp-aid-canvas"
+    style="{{width ? 'width: ' + width + 'px;' : ''}}{{height ? 'height: ' + height + 'px;' : ''}}"></canvas>

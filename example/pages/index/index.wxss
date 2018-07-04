@@ -5,24 +5,49 @@
     height: 50vh;
 }
 
+.m-wxapp-canvas-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background: darkolivegreen;
+    box-sizing: border-box;
+}
+
 .m-wxapp-canvas-div {
     position: absolute;
     top: 40rpx;
     left: 0;
     display: flex;
-    width: 400rpx;
-    height: 200rpx;
-    font-size: 50%;
+    width: auto;
+    /* height: 100rpx; */
+    min-width: 80%;
+    font-size: 60rpx;
     line-height: 1.3;
-    border: 20rpx solid red;
-    background: #ddd linear-gradient(to top right, #000, #f00 50%, #090) center repeat-y;
-    background-size: calc(100% - 20rpx) 50rpx;
+    color: red;
+    font-weight: bold;
+    border-left: 50rpx solid red;
+    border-top: 20rpx solid green;
+    border-right: 30rpx solid blue;
+    border-bottom: 40rpx solid yellowgreen;
+    background: #fff linear-gradient(30deg, #fff 0%, #000 100%) left center repeat;
+    background-size: 30%;
+    /* background-color: red; */
     background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=6551879cc94f70b3bb7d48c104994a19&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0dd7912397dda1440071ec66b8b7d0a20df486ee.jpg');
-    padding-top: 30px;
-    border-radius: 60%;
+    /* padding-top: 30px; */
+    padding: 20rpx;
+    border-radius: 50%;
     box-sizing: border-box;
+    text-align: right;
+    vertical-align: top;
+    overflow: hidden;
+    box-shadow: 3rpx 6rpx 0 1rpx red, 0 0 0 1rpx blue, 40rpx 40rpx 50rpx 1rpx goldenrod;
 }
 
 .m-canvas-text {
+    width: 50%;
+    height: 50%;
     background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=2eda614bb166ec26838f99b2bc610996&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fe4dde71190ef76c60ecc162c9716fdfaaf51679f.jpg');
 }

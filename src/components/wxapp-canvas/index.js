@@ -7,6 +7,7 @@
  * @lastDate: 2018-06-24
  */
 
+import { promisify } from '../../utils.js';
 import behaviors from '../../behaviors/index.js';
 
 Component({
@@ -113,7 +114,13 @@ Component({
                         console.log(element);
                         return element;
                     })
-                    .map(element => element.preload({ ...this._canvasRect }, this.adaptationText.bind(this)))
+                    .map(element => element.preload(
+                        { ...this._canvasRect },
+                        {
+                            adaptationText: this.adaptationText.bind(this),
+                            measureText: this.measureText.bind(this)
+                        }
+                    ))
             );
         },
 
@@ -127,17 +134,61 @@ Component({
             let idx = 0;
             const elements = this._elements.sort((first, next) => first.zIndex - next.zIndex);
             const drawCanvas = reserve => new Promise(resolve => this._ctx.draw(reserve, resolve));
+            // const drawAidCanvas = reserve => new Promise(resolve => this._aidCtx.draw(reserve, resolve));
 
             // 擦除面板
             await drawCanvas();
 
             while (idx < elements.length) {
                 let element = elements[idx];
-                element.preload && await element.preload({ ...this._canvasRect });
+                element.preload && await element.preload(
+                    { ...this._canvasRect },
+                    {
+                        adaptationText: this.adaptationText.bind(this),
+                        measureText: this.measureText.bind(this)
+                    }
+                );
+
+                // TODE: 暂时找不到方法实现透明背景
                 this._ctx.save();
                 element.render(this._ctx, { ...this._canvasRect });
                 await drawCanvas(true);
                 this._ctx.restore();
+
+                // TODE: hack 方法，但会产生毛边
+                // let { width: w, height: h } = this._canvasRect;
+                // let { width, height, startX, startY } = element._style;
+                // this._aidCtx.save();
+                // this._aidCtx.clearRect(0, 0, w, h);
+                // element.render(this._aidCtx, { ...this._canvasRect });
+                // await drawAidCanvas(false);
+                // let { data: baseData } = await promisify('canvasGetImageData')({
+                //     canvasId: 'wxapp-canvas',
+                //     x: startX, y: startY,
+                //     width, height
+                // }, this);
+                // let { data: aidData } = await promisify('canvasGetImageData')({
+                //     canvasId: 'wxapp-aid-canvas',
+                //     x: startX, y: startY,
+                //     width, height
+                // }, this);
+                // for (let i = 0; i < aidData.length / 4; i++) {
+                //     let idx = i * 4;
+                //     if (aidData[idx] + aidData[idx + 1] + aidData[idx + 2] === 0) {
+                //         aidData[idx] = baseData[idx];
+                //         aidData[idx + 1] = baseData[idx + 1];
+                //         aidData[idx + 2] = baseData[idx + 2];
+                //         aidData[idx + 3] = baseData[idx + 3];
+                //     }
+                // }
+                // await promisify('canvasPutImageData')({
+                //     canvasId: 'wxapp-canvas',
+                //     data: aidData,
+                //     x: startX, y: startY,
+                //     width, height
+                // }, this);
+                // this._aidCtx.restore();
+
                 idx++;
             }
         },
@@ -191,6 +242,20 @@ Component({
             }
 
             return calc(str);
+        },
+
+        /**
+         * 测量文本
+         *
+         * @param {String} str 需要适配的文本
+         * @param {Object} font 文本样式
+         * @return {Number} 文本宽度
+         * @api public
+         */
+        measureText(str, font) {
+            let ctx = this._aidCtx;
+            ctx.font = font;
+            return ctx.measureText(str).width;
         }
     }
 });

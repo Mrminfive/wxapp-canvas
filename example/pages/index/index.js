@@ -2,7 +2,6 @@
 Page({
     data: {
         csstext: `
-            background-color: #432434;
             content: "${'这是我的内容啊'}"
         `
     },
