@@ -44,6 +44,7 @@ Component({
             let { startX, startY, width, height, borderRadius, boxShadow } = this._style;
 
             // 用于限定绘画区域
+            ctx.save();
             drawRing(
                 ctx,
                 1,
@@ -56,6 +57,7 @@ Component({
 
             // TODE: 用于绘制阴影，但会导致无法设置透明背景
             if (boxShadow.length > 0) {
+                ctx.save();
                 boxShadow.forEach(set => {
                     ctx.setShadow(set.offsetX, set.offsetY, set.blur, set.color);
                 });
@@ -217,6 +219,8 @@ Component({
             }
 
             function clearContent() {
+                ctx.restore();
+                ctx.save();
                 drawRing(
                     ctx,
                     1,
@@ -445,6 +449,8 @@ Component({
             this
                 ._drawBackground(ctx, rect)
                 ._drawContent(ctx, rect);
+
+            ctx.restore();
         },
 
         /**

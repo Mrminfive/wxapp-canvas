@@ -7,6 +7,9 @@
     <wxapp-canvas-div
         class-name="m-wxapp-canvas-div"
         csstext="{{csstext}}"></wxapp-canvas-div>
+    <wxapp-canvas-div
+        class-name="m-wxapp-canvas-div2"
+        csstext="{{csstext}}"></wxapp-canvas-div>
     <!-- <m-canvas-text
         id="canvas-text"
         class-name="m-canvas-text"></m-canvas-text> -->

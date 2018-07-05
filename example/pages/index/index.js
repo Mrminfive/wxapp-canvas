@@ -7,7 +7,7 @@ Page({
     },
 
     onReady() {
-
+        console.log('ready')
     },
 
     bindtap() {
