@@ -19,7 +19,10 @@ Component({
     relations: {
         'element': {
             type: 'ancestor',
-            target: behaviors.wxappCanvasBehavior
+            target: behaviors.wxappCanvasBehavior,
+            linked(target) {
+                this.$canvas = target;
+            }
         }
     },
 
@@ -29,8 +32,20 @@ Component({
          *
          * @api public
          */
-        render() {
+        render(ctx) {
             // do some thing
+            let { font, startX, startY, content } = this._style;
+            ctx.font = `${font.style} ${font.weight} ${font.size}px ${font.family}`;
+            ctx.fillStyle = font.color;
+            ctx.textBaseline = 'middle';
+            content.forEach(item => {
+                ctx.fillText(
+                    item.text,
+                    startX,
+                    startY
+                );
+            });
+            console.log('draw');
         },
 
         /**

@@ -268,7 +268,6 @@ function formatBoxShadow(csstext) {
  * @return {Object}
  */
 function formatStyle(computedStyle, rect, utils) {
-    console.log(computedStyle);
     let style = {
         position: 'absolute',
         left: processPixels(computedStyle.left, rect.width),
@@ -298,6 +297,10 @@ function formatStyle(computedStyle, rect, utils) {
     };
 
     Object.assign(style, formatSize(computedStyle, style, rect, utils));
+
+    style.left === null && style.right === null && (style.left = 0);
+    style.top === null && style.bottom === null && (style.top = 0);
+
     let { padding, width, height } = style;
     return {
         ...style,
@@ -314,12 +317,20 @@ function formatStyle(computedStyle, rect, utils) {
             'bottom-left': formatBorderRadiusStyle(computedStyle['border-bottom-left-radius'], { width, height }),
             'bottom-right': formatBorderRadiusStyle(computedStyle['border-bottom-right-radius'], { width, height })
         },
-        startX: style.left >= style.right
-            ? style.left
-            : rect.width - style.right - width,
-        startY: style.top >= style.bottom
-            ? style.top
-            : rect.height - style.bottom - height
+        startX: style.left === null
+            ? rect.width - style.right - width
+            : style.right === null
+                ? style.left
+                : style.left >= style.right
+                    ? style.left
+                    : rect.width - style.right - width,
+        startY: style.top === null
+            ? rect.height - style.bottom - height
+            : style.bottom === null
+                ? style.top
+                : style.top >= style.bottom
+                    ? style.top
+                    : rect.height - style.bottom - height
     };
 }
 

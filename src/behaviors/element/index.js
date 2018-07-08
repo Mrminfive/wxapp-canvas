@@ -124,7 +124,8 @@ export default Behavior({
 
             await asyncEach(resources, async key => {
                 if (this._resources[key] == null) {
-                    this._resources[key] = await downloadImage(key);
+                    this._resources[key] = this.$canvas._resources[key] || await downloadImage(key);
+                    this.$canvas._resources[key] = this._resources[key];
                 }
             });
         }

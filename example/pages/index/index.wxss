@@ -65,7 +65,7 @@
     background: #fff linear-gradient(30deg, #fff 0%, #000 100%) left center repeat;
     background-size: 30%;
     /* background-color: red; */
-    /* background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=6551879cc94f70b3bb7d48c104994a19&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0dd7912397dda1440071ec66b8b7d0a20df486ee.jpg'); */
+    background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=6551879cc94f70b3bb7d48c104994a19&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0dd7912397dda1440071ec66b8b7d0a20df486ee.jpg');
     /* padding-top: 30px; */
     padding: 20rpx;
     border-radius: 50%;
@@ -77,7 +77,10 @@
 }
 
 .m-canvas-text {
-    width: 50%;
-    height: 50%;
-    background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=2eda614bb166ec26838f99b2bc610996&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fe4dde71190ef76c60ecc162c9716fdfaaf51679f.jpg');
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 20rpx;
+    color: goldenrod;
+    content: '这是自定义文本节点';
 }

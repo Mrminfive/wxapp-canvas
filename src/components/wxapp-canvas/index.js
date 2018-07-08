@@ -23,7 +23,6 @@ Component({
             target: behaviors.element,
             linked(target) {
                 this._elements.push(target);
-                console.log('linked: ', target);
             },
             unlinked(target) {
                 this._elements = this._elements.filter(element => element.__wxExparserNodeId__ !== target.__wxExparserNodeId__);
@@ -48,6 +47,7 @@ Component({
         this._ctx = null;
         this._elements = [];
         this._canvasRect = null;
+        this._resources = {};
     },
 
     attached() {
@@ -75,7 +75,6 @@ Component({
                     query
                         .select('#wxapp-canvas-view')
                         .boundingClientRect(res => {
-                            console.log(res);
                             this._canvasRect = res;
                             this.setData({
                                 width: res.width,
@@ -132,7 +131,7 @@ Component({
          */
         async draw() {
             let idx = 0;
-            const elements = this._elements.sort((first, next) => first.zIndex - next.zIndex);
+            const elements = this._elements.sort((first, next) => first._style.zIndex - next._style.zIndex);
             const drawCanvas = reserve => new Promise(resolve => this._ctx.draw(reserve, resolve));
             // const drawAidCanvas = reserve => new Promise(resolve => this._aidCtx.draw(reserve, resolve));
 
@@ -217,6 +216,8 @@ Component({
 
             ctx.font = font;
 
+            let width = ctx.measureText(str).width;
+
             function calc(str) {
                 let len = str.length;
                 let idx = 0;
@@ -241,7 +242,7 @@ Component({
                 return idx === len ? result : result.concat(calc(str.substring(idx)));
             }
 
-            return calc(str);
+            return width > maxWidth ? calc(str) : [{ text: str, width: width }];
         },
 
         /**
