@@ -115,6 +115,7 @@ async function downloadImage(src) {
  * @return {Promise}
  */
 async function downloadFile(url) {
+    // console.log(url)
     if (checkIsWxFliePath(url)) {
         return url;
     } else if (checkIsNetworkFile(url)) {

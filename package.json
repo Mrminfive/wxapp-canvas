@@ -4,8 +4,8 @@
   "description": "微信小程序快速绘画工具",
   "main": "index.js",
   "scripts": {
-    "start": "gulp build",
-    "doc": "gulp doc",
+    "dev": "cross-env OUTPUT_DIST=./example/packages/wxapp-canvas gulp build",
+    "build": "gulp build",
     "lint": "eslint ./src"
   },
   "pre-commit": [
@@ -34,12 +34,12 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
     "chalk": "^2.4.1",
+    "cross-env": "^5.2.0",
     "eslint": "^5.0.0",
     "eslint-config-mlint": "^1.0.1",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.1",
     "gulp-cached": "^1.1.1",
-    "gulp-concat": "^2.6.1",
     "gulp-ignore": "^2.0.2",
     "gulp-newer": "^1.4.0",
     "pre-commit": "^1.2.2",

@@ -1,7 +1,0 @@
-{
-    "publicComponents": {
-        "wxapp-canvas": "components/wxapp-canvas/index",
-        "wxapp-canvas-div": "components/wxapp-canvas-div/index"
-    },
-    "main": "index.js"
-}

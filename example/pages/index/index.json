@@ -1,7 +1,7 @@
 {
     "usingComponents": {
-        "wxapp-canvas": "plugin://wxappCanvas/wxapp-canvas",
-        "wxapp-canvas-div": "plugin://wxappCanvas/wxapp-canvas-div",
+        "wxapp-canvas": "/packages/wxapp-canvas/components/wxapp-canvas/index",
+        "wxapp-canvas-div": "/packages/wxapp-canvas/components/wxapp-canvas-div/index",
         "m-canvas-text": "/components/m-canvas-text/index"
     }
 }

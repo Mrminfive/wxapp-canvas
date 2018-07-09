@@ -17,11 +17,10 @@ const gulpCache = require('gulp-cached');
 const gulpNewer = require('gulp-newer');
 const gulpBabel = require('gulp-babel');
 const gulpIgnore = require('gulp-ignore');
-const gulpConcat = require('gulp-concat');
 const pkg = require('./package.json');
 
 const FROM_DIR = './src';
-const OUT_DIR = './dist';
+const OUT_DIR = process.env.OUTPUT_DIST || './dist';
 
 function webpackFile(srcList, isShortPath = false) {
     function shortPath(src) {
@@ -42,7 +41,7 @@ function webpackFile(srcList, isShortPath = false) {
                     entry: src,
                     output: {
                         path: path.join(__dirname, OUT_DIR),
-                        libraryTarget: 'commonjs',
+                        libraryTarget: 'commonjs-module',
                         filename: isShortPath ? shortPath(src) : src
                     },
                     optimization: {
@@ -78,6 +77,15 @@ function runtimeFile() {
 
         await webpackFile(inputHelpers);
 
+        let dirTree = file.relative.split(path.sep);
+        dirTree.pop();
+
+        if (dirTree.length > 0) {
+            let str = file.contents.toString()
+                .replace(/from '\/babel-runtime\//g, `from '${dirTree.reduce(res => res + '../', '')}babel-runtime/`);
+            file.contents = Buffer.from(str);
+        }
+
         inputHelpers.forEach(helper => console.log(chalk.green('input runtime success: ' + helper)));
         callback(null, file);
     });
@@ -98,12 +106,6 @@ gulp.task('other', () => {
         .pipe(gulpIgnore.exclude(file => path.extname(file.path) === '.js'))
         .pipe(gulpNewer(OUT_DIR))
         .pipe(gulp.dest(OUT_DIR));
-});
-
-gulp.task('doc', () => {
-    return gulp.src(['README.md', 'CHANGELOG.md'])
-        .pipe(gulpConcat('README.md'))
-        .pipe(gulp.dest('doc'));
 });
 
 gulp.task('build', ['clean'], () => {

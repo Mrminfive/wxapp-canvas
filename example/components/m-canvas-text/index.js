@@ -7,7 +7,7 @@
  * @lastDate: 2018-06-24
  */
 
-const { behaviors } = requirePlugin('wxappCanvas');
+const { behaviors } = require('../../packages/wxapp-canvas/index.js');
 
 Component({
     externalClasses: ['class-name'],
