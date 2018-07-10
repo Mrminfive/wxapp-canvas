@@ -102,9 +102,9 @@ function promisifyList(methods = []) {
  * @return {Promise}
  */
 async function downloadImage(src) {
-    // let tempPath = await downloadFile(src);
+    let tempPath = await downloadFile(src);
     return promisify('getImageInfo')({
-        src
+        src: tempPath
     });
 }
 
