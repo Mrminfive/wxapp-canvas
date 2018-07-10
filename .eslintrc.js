@@ -1,5 +1,9 @@
 module.exports = {
     extends: 'mlint',
+
+    rules: {
+        "no-magic-numbers": 0
+    },
     
     globals: {
         wx: false,
