@@ -7,7 +7,7 @@
  * @lastDate: 2018-06-24
  */
 
-import { promisify } from '../../utils.js';
+import { promisify, asyncEach } from '../../utils.js';
 import behaviors from '../../behaviors/index.js';
 
 Component({
@@ -48,6 +48,7 @@ Component({
         this._elements = [];
         this._canvasRect = null;
         this._resources = {};
+        this._systemInfo = wx.getSystemInfoSync();
     },
 
     attached() {
@@ -130,16 +131,9 @@ Component({
          * @api public
          */
         async draw() {
-            let idx = 0;
-            const elements = this._elements.sort((first, next) => first._style.zIndex - next._style.zIndex);
             const drawCanvas = reserve => new Promise(resolve => this._ctx.draw(reserve, resolve));
-            // const drawAidCanvas = reserve => new Promise(resolve => this._aidCtx.draw(reserve, resolve));
 
-            // 擦除面板
-            await drawCanvas();
-
-            while (idx < elements.length) {
-                let element = elements[idx];
+            asyncEach(this._elements, async element => {
                 element.preload && await element.preload(
                     { ...this._canvasRect },
                     {
@@ -147,11 +141,21 @@ Component({
                         measureText: this.measureText.bind(this)
                     }
                 );
+            });
 
+            const elements = this._elements.sort((first, next) => first._style.zIndex - next._style.zIndex);
+            // const drawAidCanvas = reserve => new Promise(resolve => this._aidCtx.draw(reserve, resolve));
+
+            // 擦除面板
+            await drawCanvas();
+
+            asyncEach(elements, async element => {
                 // TODE: 暂时找不到方法实现透明背景
                 this._ctx.save();
                 element.render(this._ctx, { ...this._canvasRect });
                 await drawCanvas(true);
+                // hack处理安卓端绘制错乱bug
+                ~this._systemInfo.system.indexOf('Android') && await new Promise(res => setTimeout(res, 50));
                 this._ctx.restore();
 
                 // TODE: hack 方法，但会产生毛边
@@ -187,9 +191,7 @@ Component({
                 //     width, height
                 // }, this);
                 // this._aidCtx.restore();
-
-                idx++;
-            }
+            });
         },
 
         /**

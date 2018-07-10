@@ -10,7 +10,7 @@ import _extends from '../../babel-runtime/helpers/extends';
  * @lastDate: 2018-06-24
  */
 
-import { promisify } from '../../utils.js';
+import { promisify, asyncEach } from '../../utils.js';
 import behaviors from '../../behaviors/index.js';
 
 Component({
@@ -51,6 +51,7 @@ Component({
         this._elements = [];
         this._canvasRect = null;
         this._resources = {};
+        this._systemInfo = wx.getSystemInfoSync();
     },
     attached: function attached() {
         this.triggerEvent('ref', this);
@@ -183,107 +184,145 @@ Component({
          * @api public
          */
         draw: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3() {
+            var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee5() {
                 var _this3 = this;
 
-                var idx, elements, drawCanvas, element;
-                return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+                var drawCanvas, elements;
+                return _regeneratorRuntime.wrap(function _callee5$(_context5) {
                     while (1) {
-                        switch (_context3.prev = _context3.next) {
+                        switch (_context5.prev = _context5.next) {
                             case 0:
-                                idx = 0;
-                                elements = this._elements.sort(function (first, next) {
-                                    return first._style.zIndex - next._style.zIndex;
-                                });
-
                                 drawCanvas = function drawCanvas(reserve) {
                                     return new Promise(function (resolve) {
                                         return _this3._ctx.draw(reserve, resolve);
                                     });
                                 };
+
+                                asyncEach(this._elements, function () {
+                                    var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee3(element) {
+                                        return _regeneratorRuntime.wrap(function _callee3$(_context3) {
+                                            while (1) {
+                                                switch (_context3.prev = _context3.next) {
+                                                    case 0:
+                                                        _context3.t0 = element.preload;
+
+                                                        if (!_context3.t0) {
+                                                            _context3.next = 4;
+                                                            break;
+                                                        }
+
+                                                        _context3.next = 4;
+                                                        return element.preload(_extends({}, _this3._canvasRect), {
+                                                            adaptationText: _this3.adaptationText.bind(_this3),
+                                                            measureText: _this3.measureText.bind(_this3)
+                                                        });
+
+                                                    case 4:
+                                                    case 'end':
+                                                        return _context3.stop();
+                                                }
+                                            }
+                                        }, _callee3, _this3);
+                                    }));
+
+                                    return function (_x) {
+                                        return _ref4.apply(this, arguments);
+                                    };
+                                }());
+
+                                elements = this._elements.sort(function (first, next) {
+                                    return first._style.zIndex - next._style.zIndex;
+                                });
                                 // const drawAidCanvas = reserve => new Promise(resolve => this._aidCtx.draw(reserve, resolve));
 
                                 // 擦除面板
 
-
-                                _context3.next = 5;
+                                _context5.next = 5;
                                 return drawCanvas();
 
                             case 5:
-                                if (!(idx < elements.length)) {
-                                    _context3.next = 19;
-                                    break;
-                                }
 
-                                element = elements[idx];
-                                _context3.t0 = element.preload;
+                                asyncEach(elements, function () {
+                                    var _ref5 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime.mark(function _callee4(element) {
+                                        return _regeneratorRuntime.wrap(function _callee4$(_context4) {
+                                            while (1) {
+                                                switch (_context4.prev = _context4.next) {
+                                                    case 0:
+                                                        // TODE: 暂时找不到方法实现透明背景
+                                                        _this3._ctx.save();
+                                                        element.render(_this3._ctx, _extends({}, _this3._canvasRect));
+                                                        _context4.next = 4;
+                                                        return drawCanvas(true);
 
-                                if (!_context3.t0) {
-                                    _context3.next = 11;
-                                    break;
-                                }
+                                                    case 4:
+                                                        _context4.t0 = ~_this3._systemInfo.system.indexOf('Android');
 
-                                _context3.next = 11;
-                                return element.preload(_extends({}, this._canvasRect), {
-                                    adaptationText: this.adaptationText.bind(this),
-                                    measureText: this.measureText.bind(this)
-                                });
+                                                        if (!_context4.t0) {
+                                                            _context4.next = 8;
+                                                            break;
+                                                        }
 
-                            case 11:
+                                                        _context4.next = 8;
+                                                        return new Promise(function (res) {
+                                                            return setTimeout(res, 50);
+                                                        });
 
-                                // TODE: 暂时找不到方法实现透明背景
-                                this._ctx.save();
-                                element.render(this._ctx, _extends({}, this._canvasRect));
-                                _context3.next = 15;
-                                return drawCanvas(true);
+                                                    case 8:
+                                                        _this3._ctx.restore();
 
-                            case 15:
-                                this._ctx.restore();
+                                                        // TODE: hack 方法，但会产生毛边
+                                                        // let { width: w, height: h } = this._canvasRect;
+                                                        // let { width, height, startX, startY } = element._style;
+                                                        // this._aidCtx.save();
+                                                        // this._aidCtx.clearRect(0, 0, w, h);
+                                                        // element.render(this._aidCtx, { ...this._canvasRect });
+                                                        // await drawAidCanvas(false);
+                                                        // let { data: baseData } = await promisify('canvasGetImageData')({
+                                                        //     canvasId: 'wxapp-canvas',
+                                                        //     x: startX, y: startY,
+                                                        //     width, height
+                                                        // }, this);
+                                                        // let { data: aidData } = await promisify('canvasGetImageData')({
+                                                        //     canvasId: 'wxapp-aid-canvas',
+                                                        //     x: startX, y: startY,
+                                                        //     width, height
+                                                        // }, this);
+                                                        // for (let i = 0; i < aidData.length / 4; i++) {
+                                                        //     let idx = i * 4;
+                                                        //     if (aidData[idx] + aidData[idx + 1] + aidData[idx + 2] === 0) {
+                                                        //         aidData[idx] = baseData[idx];
+                                                        //         aidData[idx + 1] = baseData[idx + 1];
+                                                        //         aidData[idx + 2] = baseData[idx + 2];
+                                                        //         aidData[idx + 3] = baseData[idx + 3];
+                                                        //     }
+                                                        // }
+                                                        // await promisify('canvasPutImageData')({
+                                                        //     canvasId: 'wxapp-canvas',
+                                                        //     data: aidData,
+                                                        //     x: startX, y: startY,
+                                                        //     width, height
+                                                        // }, this);
+                                                        // this._aidCtx.restore();
 
-                                // TODE: hack 方法，但会产生毛边
-                                // let { width: w, height: h } = this._canvasRect;
-                                // let { width, height, startX, startY } = element._style;
-                                // this._aidCtx.save();
-                                // this._aidCtx.clearRect(0, 0, w, h);
-                                // element.render(this._aidCtx, { ...this._canvasRect });
-                                // await drawAidCanvas(false);
-                                // let { data: baseData } = await promisify('canvasGetImageData')({
-                                //     canvasId: 'wxapp-canvas',
-                                //     x: startX, y: startY,
-                                //     width, height
-                                // }, this);
-                                // let { data: aidData } = await promisify('canvasGetImageData')({
-                                //     canvasId: 'wxapp-aid-canvas',
-                                //     x: startX, y: startY,
-                                //     width, height
-                                // }, this);
-                                // for (let i = 0; i < aidData.length / 4; i++) {
-                                //     let idx = i * 4;
-                                //     if (aidData[idx] + aidData[idx + 1] + aidData[idx + 2] === 0) {
-                                //         aidData[idx] = baseData[idx];
-                                //         aidData[idx + 1] = baseData[idx + 1];
-                                //         aidData[idx + 2] = baseData[idx + 2];
-                                //         aidData[idx + 3] = baseData[idx + 3];
-                                //     }
-                                // }
-                                // await promisify('canvasPutImageData')({
-                                //     canvasId: 'wxapp-canvas',
-                                //     data: aidData,
-                                //     x: startX, y: startY,
-                                //     width, height
-                                // }, this);
-                                // this._aidCtx.restore();
+                                                    case 9:
+                                                    case 'end':
+                                                        return _context4.stop();
+                                                }
+                                            }
+                                        }, _callee4, _this3);
+                                    }));
 
-                                idx++;
-                                _context3.next = 5;
-                                break;
+                                    return function (_x2) {
+                                        return _ref5.apply(this, arguments);
+                                    };
+                                }());
 
-                            case 19:
+                            case 6:
                             case 'end':
-                                return _context3.stop();
+                                return _context5.stop();
                         }
                     }
-                }, _callee3, this);
+                }, _callee5, this);
             }));
 
             function draw() {
