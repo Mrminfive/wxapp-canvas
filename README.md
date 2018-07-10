@@ -1,7 +1,7 @@
 
 <p align="center"><a href="https://github.com/Mrminfive/wxapp-canvas" rel="noopener noreferrer"><img src="./logo.png" alt="Wxapp Canvas logo"></a></p>
 
-<h2 align="center">wxapp-canvas</h2>
+<h3 align="center">wxapp-canvas</h3>
 
 <h3 align="center">🎨 微信小程序快速绘画工具</h3>
 

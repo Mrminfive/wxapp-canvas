@@ -1,0 +1,4 @@
+
+.canvas-element {
+    display: none !important;
+}
