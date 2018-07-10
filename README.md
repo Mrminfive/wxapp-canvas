@@ -1,11 +1,20 @@
 
 <p align="center"><a href="https://github.com/Mrminfive/wxapp-canvas" rel="noopener noreferrer"><img src="./logo.png" alt="Wxapp Canvas logo"></a></p>
 
-<h2 align="center">wxapp-canvas</h3>
+<h2 align="center">wxapp-canvas</h2>
+
 <h3 align="center">🎨 微信小程序快速绘画工具</h3>
 
 
 ## 简介
+
+项目使用样式表来绘制 canvas，利用 wxss 下 rpx 单位实现适配，既能保证开发效率，同时也没有学习成本。
+
+组件实现了 css 基本盒子模型，涵盖宽高、背景、字体、边框、内边距等，支持 **自适应宽高**、**文本换行**、**圆角边框**、**背景渐变**、**背景重复** 等好玩功能，感兴趣的可以了解下。
+
+绘制代码没有与组件抽离，有兴趣的同学可以试试抽离去适配多终端玩玩。
+
+<img src="./demo.gif" style="display: block; margin: auto;" />
 
 > 注意：项目使用 `canvasContext.measureText`、`nodesRef.fields` 等，请保持基础库 >= 1.9.10
 
@@ -116,6 +125,18 @@
         }
     });
     ```
+
+    组件对外暴露以下方法：
+
+    * `draw`：绘制面板
+         * @return {Promise}
+    * `getContext`：导出画板上下文
+         * @return {Object} canvas 上下文
+    * `adaptationText`：适配文本
+         * @param {String} str 需要适配的文本
+         * @param {Object} font 文本样式
+         * @param {Number} maxWidth 最大容器宽度
+         * @return {Array} 分段好的文本
 
 ## 自定义扩展
 

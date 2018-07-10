@@ -1,15 +1,22 @@
 
-<view>fdsfas</view>
-<button bindtap="bindtap">点击</button>
-<wxapp-canvas class-name="m-wxapp-canvas" bindref="bindRefs">
-    <wxapp-canvas-div
-        class-name="m-wxapp-canvas-bg"></wxapp-canvas-div>
-    <wxapp-canvas-div
-        class-name="m-wxapp-canvas-div"
-        csstext="{{csstext}}"></wxapp-canvas-div>
-    <wxapp-canvas-div
-        class-name="m-wxapp-canvas-div2"
-        csstext="{{csstext}}"></wxapp-canvas-div>
-    <m-canvas-text
-        class-name="m-canvas-text"></m-canvas-text>
-</wxapp-canvas>
+<view class="page">
+    <button bindtap="bindtap">点击</button>
+    <wxapp-canvas class="m-canvas" class-name="m-wxapp-canvas" bindref="bindRefs">
+        <wxapp-canvas-div
+            class-name="m-wxapp-canvas-bg"></wxapp-canvas-div>
+        <wxapp-canvas-div
+            class-name="m-wxapp-canvas-div"
+            csstext="{{csstext}}"></wxapp-canvas-div>
+        <wxapp-canvas-div
+            class-name="m-wxapp-canvas-div2"
+            csstext="{{csstext}}"></wxapp-canvas-div>
+        <wxapp-canvas-div
+            class-name="m-wxapp-canvas-div3"
+            csstext="{{csstext}}"></wxapp-canvas-div>
+        <wxapp-canvas-div
+            class-name="m-wxapp-canvas-div4"
+            csstext="{{csstext}}"></wxapp-canvas-div>
+        <m-canvas-text
+            class-name="m-canvas-text"></m-canvas-text>
+    </wxapp-canvas>
+</view>
