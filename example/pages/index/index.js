@@ -7,7 +7,7 @@ Page({
     },
 
     onReady() {
-        console.log('ready')
+        console.log('ready');
     },
 
     bindtap() {
@@ -17,7 +17,9 @@ Page({
         this.$refs['wxapp-canvas']
             .draw()
             .catch(err => {
-                console.log(err);
+                wx.showModal({
+                    content: JSON.stringify(err)
+                });
             })
             .finally(() => {
                 wx.hideLoading();

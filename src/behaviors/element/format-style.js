@@ -10,6 +10,7 @@
 import { errorInfo } from '../../utils.js';
 
 const splitReg = /\s(?!([^()]*\))(?!\)))/;
+const systemInfo = wx.getSystemInfoSync();
 
 /**
  * 解析像素值
@@ -76,7 +77,7 @@ function formatFontStyle(style) {
 function formatSize(computedStyle, style, rect, utils) {
     const { adaptationText, measureText } = utils;
     const font = `${style.font.style} ${style.font.weight} ${style.font.size}px ${style.font.family}`;
-    const contentText = computedStyle.content.slice(1, -1);
+    const contentText = systemInfo.platform !== 'ios' ? computedStyle.content.slice(1, -1) : computedStyle.content;
     const { border, padding } = style;
     const result = {
         width: processPixels(computedStyle['width'], rect.width),
@@ -161,7 +162,7 @@ function formatBackground(style, rect) {
         image: style['background-image']
     };
     // linear-gradient(50deg, rgb(0, 0, 0), rgb(255, 0, 0) 50%, rgb(0, 153, 0))
-    if (setting.image.match(/^url\("(.+)"\)$/)) {
+    if (setting.image.match(/^url\("*([^"]+)"*\)$/)) {
         setting._imageType = 'image';
         setting._imageUrl = RegExp.$1;
     } else if (setting.image.match(/^linear-gradient\((.+)\)$/)) {
@@ -179,7 +180,6 @@ function formatBackground(style, rect) {
             })
         };
     }
-
     return setting;
 }
 

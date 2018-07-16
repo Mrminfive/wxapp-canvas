@@ -28,7 +28,8 @@ Component({
     },
 
     data: {
-        name: 'wxapp-canvas-div'
+        name: 'wxapp-canvas-div',
+        log: ''
     },
 
     methods: {
@@ -119,6 +120,7 @@ Component({
                     }
                 ];
 
+                ctx.save();
                 pointMap.forEach((item, idx) => {
                     ctx.beginPath();
                     ctx.lineWidth = (border[item.key].width + item.width) * 2;
@@ -127,6 +129,7 @@ Component({
                     ctx.setStrokeStyle(border[item.key].color);
                     ctx.stroke();
                 });
+                ctx.restore();
             }
 
             function drawCorner() {
@@ -203,6 +206,7 @@ Component({
                     ]
                 ];
 
+                ctx.save();
                 points.forEach(setting => {
                     let [ax, ay, bx, by, cx, cy, dx, dy, style] = setting;
 
@@ -216,6 +220,7 @@ Component({
                     ctx.fillStyle = style;
                     ctx.fill();
                 });
+                ctx.restore();
             }
 
             function clearContent() {
@@ -275,10 +280,10 @@ Component({
                 height: containerSize.height + padding.top + padding.bottom
             };
             let resources = this._resources;
+            const self = this;
 
             drawBackgroundColor();
             drawBackgroundImage();
-
             // 背景色
             function drawBackgroundColor() {
                 ctx.fillStyle = background.color;
@@ -292,13 +297,13 @@ Component({
                 if (typeof size === 'string') {
                     switch (size) {
                         case 'auto':
-                            size = background._src
-                                ? [resources[background._src].width, resources[background._src].height]
+                            size = background._imageUrl
+                                ? [resources[background._imageUrl].width, resources[background._imageUrl].height]
                                 : [contentSize.width, contentSize.height];
                             break;
                         case 'contain':
-                            if (background._src) {
-                                let resource = resources[background._src];
+                            if (background._imageUrl) {
+                                let resource = resources[background._imageUrl];
                                 let proportion = resource.height / resource.width;
                                 let containerProportion = contentSize.height / contentSize.width;
 
@@ -335,7 +340,7 @@ Component({
                         switch (background._imageType) {
                             case 'image':
                                 ctx.drawImage(
-                                    resources[background._src].path,
+                                    resources[background._imageUrl].path,
                                     startX + border.left.width + size[0] * xi,
                                     startY + border.top.width + size[1] * yi,
                                     size[0], size[1]
@@ -413,6 +418,7 @@ Component({
             };
 
             overflow !== 'hidden' && ctx.restore();
+            ctx.save();
             ctx.font = `${font.style} ${font.weight} ${font.size}px ${font.family}`;
             ctx.fillStyle = font.color;
             ctx.textBaseline = 'middle';
@@ -428,6 +434,7 @@ Component({
                         alignMap[font.verticalAlign] * (containerSize.height - content.length * font.lineHeight)
                 );
             });
+            ctx.restore();
 
             return this;
         },

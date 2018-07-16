@@ -110,10 +110,6 @@ Component({
             await Promise.all(
                 this._elements
                     .filter(element => element.preload)
-                    .map(element => {
-                        console.log(element);
-                        return element;
-                    })
                     .map(element => element.preload(
                         { ...this._canvasRect },
                         {
@@ -133,7 +129,7 @@ Component({
         async draw() {
             const drawCanvas = reserve => new Promise(resolve => this._ctx.draw(reserve, resolve));
 
-            asyncEach(this._elements, async element => {
+            await asyncEach(this._elements, async element => {
                 element.preload && await element.preload(
                     { ...this._canvasRect },
                     {
@@ -149,14 +145,14 @@ Component({
             // 擦除面板
             await drawCanvas();
 
-            asyncEach(elements, async element => {
+            await asyncEach(elements, async element => {
                 // TODE: 暂时找不到方法实现透明背景
                 this._ctx.save();
                 element.render(this._ctx, { ...this._canvasRect });
+                this._ctx.restore();
                 await drawCanvas(true);
                 // hack处理安卓端绘制错乱bug
                 ~this._systemInfo.system.indexOf('Android') && await new Promise(res => setTimeout(res, 50));
-                this._ctx.restore();
 
                 // TODE: hack 方法，但会产生毛边
                 // let { width: w, height: h } = this._canvasRect;

@@ -6,6 +6,13 @@
     flex-direction: column;
 }
 
+.m-btn {
+    width: 100%;
+    /* color: #fff; */
+    background: #fcef37;
+    border-radius: 0;
+}
+
 .m-canvas {
     flex: 1 0 0;
 }
@@ -16,92 +23,10 @@
     height: 100%;
 }
 
-.m-wxapp-canvas-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
+.m-canvas__bg {
+    display: block;
     width: 100%;
     height: 100%;
-    background: darkolivegreen;
-    box-sizing: border-box;
-}
-
-.m-wxapp-canvas-div {
-    position: absolute;
-    top: 40rpx;
-    left: 0;
-    display: flex;
-    width: auto;
-    /* height: 100rpx; */
-    min-width: 80%;
-    font-size: 60rpx;
-    line-height: 1.3;
-    color: red;
-    font-weight: bold;
-    border-left: 50rpx solid red;
-    border-top: 20rpx solid green;
-    border-right: 30rpx solid blue;
-    border-bottom: 40rpx solid yellowgreen;
-    /* background: #fff linear-gradient(30deg, #fff 0%, #000 100%) left center repeat; */
-    background-size: 30%;
-    /* background-color: red; */
-    background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530006177159&di=6551879cc94f70b3bb7d48c104994a19&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2F0dd7912397dda1440071ec66b8b7d0a20df486ee.jpg');
-    /* padding-top: 30px; */
-    padding: 20rpx;
-    border-radius: 50%;
-    box-sizing: border-box;
-    text-align: right;
-    vertical-align: top;
-    overflow: hidden;
-    box-shadow: 3rpx 6rpx 0 1rpx red, 0 0 0 1rpx blue, 40rpx 40rpx 50rpx 1rpx goldenrod;
-}
-
-.m-wxapp-canvas-div2 {
-    position: absolute;
-    top: 400rpx;
-    left: 0;
-    display: flex;
-    width: 300rpx;
-    height: 300rpx;
-    border: 10rpx solid goldenrod;
-    padding: 20rpx;
-    border-radius: 30rpx;
-}
-
-.m-wxapp-canvas-div3 {
-    position: absolute;
-    top: 400rpx;
-    left: 400rpx;
-    display: flex;
-    width: 300rpx;
-    height: 300rpx;
-    border: 10rpx solid goldenrod;
-    padding: 20rpx;
-    border-radius: 30rpx;
-    text-align: center;
-    vertical-align: middle;
-}
-
-.m-wxapp-canvas-div4 {
-    position: absolute;
-    top: 800rpx;
-    left: 400rpx;
-    display: flex;
-    width: 300rpx;
-    height: 300rpx;
-    border: 10rpx solid goldenrod;
-    padding: 20rpx;
-    border-radius: 30rpx;
-    text-align: right;
-    vertical-align: bottom;
-}
-
-.m-canvas-text {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    font-size: 20rpx;
-    color: goldenrod;
-    content: '这是自定义文本节点';
+    background: url("https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/logo.png") center no-repeat;
+    background-size: contain;
 }

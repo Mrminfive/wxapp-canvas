@@ -96,10 +96,9 @@ export default Behavior({
                     res => {
                         const style = formatStyle(res, rect, utils);
                         this._style = style;
-
-                        if (style.background.image.match(/^url\("(.+)"\)$/)) {
-                            const url = RegExp.$1;
-                            style.background._src = url;
+                        console.log(style.background);
+                        if (style.background._imageUrl) {
+                            const url = style.background._imageUrl;
                             this._resources[url] = this._resources[url];
                         }
                         resolve(style);
@@ -123,8 +122,15 @@ export default Behavior({
             const resources = Object.keys(this._resources);
 
             await asyncEach(resources, async key => {
+                this.setData({
+                    log: this._resources[key] == null
+                });
                 if (this._resources[key] == null) {
-                    this._resources[key] = this.$canvas._resources[key] || await downloadImage(key);
+                    if (this.$canvas._resources[key]) {
+                        this._resources[key] = this.$canvas._resources[key];
+                    } else {
+                        this._resources[key] = await downloadImage(key);
+                    }
                     this.$canvas._resources[key] = this._resources[key];
                 }
             });
