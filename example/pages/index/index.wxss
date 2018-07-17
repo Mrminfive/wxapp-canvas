@@ -27,6 +27,83 @@
     display: block;
     width: 100%;
     height: 100%;
-    background: url("https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/logo.png") center no-repeat;
+    background: url('https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/example/images/bg.jpg') center no-repeat;
+    background-size: cover;
+}
+
+.m-canvas__logo {
+    display: block;
+    width: 430rpx;
+    height: 194rpx;
+    position: absolute;
+    left: 160rpx;
+    top: 122rpx;
+    background: url('https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/logo.png') center no-repeat;
     background-size: contain;
+}
+
+.m-canvas__name {
+    display: block;
+    width: 360rpx;
+    height: 90rpx;
+    position: absolute;
+    left: 198rpx;
+    bottom: 556rpx;
+    color: #fff;
+    font-size: 40rpx;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+    content: 'Wxapp-Canvas';
+}
+
+.m-canvas__demo {
+    display: block;
+    width: 190rpx;
+    height: 190rpx;
+    padding: 10rpx;
+    position: absolute;
+    top: 490rpx;
+    border: 20rpx solid #acb629;
+    border-top-color: #acb629;
+    border-right-color: #fcef37;
+    border-bottom-color: #acb629;
+    border-left-color: #fcef37;
+    border-radius: 20rpx;
+    background: #fff;
+    font-size: 20rpx;
+}
+
+.m-canvas__demo-1 {
+    left: 45rpx;
+    content: '大家都是padding:10，这个是左对齐+顶部对齐';
+    text-align: left;
+    vertical-align: top;
+}
+
+.m-canvas__demo-2 {
+    left: calc(45rpx * 2 + 190rpx * 1);
+    content: '大家都是padding:10，这个是居中对齐';
+    text-align: center;
+    vertical-align: middle;
+}
+
+.m-canvas__demo-3 {
+    left: calc(45rpx * 3 + 190rpx * 2);
+    content: '大家都是padding:10，这个是右对齐+底部对齐';
+    text-align: right;
+    vertical-align: bottom;
+}
+
+.m-canvas__qrcode {
+    display: block;
+    width: 220rpx;
+    height: 220rpx;
+    border: 10rpx solid #fff;
+    border-radius: 20rpx;
+    position: absolute;
+    bottom: 200rpx;
+    left: 110rpx;
+    background: red;
+    background-size: cover;
 }

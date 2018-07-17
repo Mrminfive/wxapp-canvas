@@ -96,7 +96,6 @@ export default Behavior({
                     res => {
                         const style = formatStyle(res, rect, utils);
                         this._style = style;
-                        console.log(style.background);
                         if (style.background._imageUrl) {
                             const url = style.background._imageUrl;
                             this._resources[url] = this._resources[url];

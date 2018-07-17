@@ -72,7 +72,6 @@ export default Behavior({
                 }, function (res) {
                     var style = formatStyle(res, rect, utils);
                     _this._style = style;
-                    console.log(style.background);
                     if (style.background._imageUrl) {
                         var url = style.background._imageUrl;
                         _this._resources[url] = _this._resources[url];

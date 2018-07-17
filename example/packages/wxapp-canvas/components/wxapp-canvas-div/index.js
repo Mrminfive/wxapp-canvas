@@ -30,8 +30,7 @@ Component({
     },
 
     data: {
-        name: 'wxapp-canvas-div',
-        log: ''
+        name: 'wxapp-canvas-div'
     },
 
     methods: {
