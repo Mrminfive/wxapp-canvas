@@ -72,10 +72,8 @@ export default Behavior({
                 }, function (res) {
                     var style = formatStyle(res, rect, utils);
                     _this._style = style;
-
-                    if (style.background.image.match(/^url\("(.+)"\)$/)) {
-                        var url = RegExp.$1;
-                        style.background._src = url;
+                    if (style.background._imageUrl) {
+                        var url = style.background._imageUrl;
                         _this._resources[url] = _this._resources[url];
                     }
                     resolve(style);
@@ -122,30 +120,35 @@ export default Behavior({
                                             while (1) {
                                                 switch (_context2.prev = _context2.next) {
                                                     case 0:
+                                                        _this2.setData({
+                                                            log: _this2._resources[key] == null
+                                                        });
+
                                                         if (!(_this2._resources[key] == null)) {
-                                                            _context2.next = 8;
+                                                            _context2.next = 10;
                                                             break;
                                                         }
 
-                                                        _context2.t0 = _this2.$canvas._resources[key];
-
-                                                        if (_context2.t0) {
+                                                        if (!_this2.$canvas._resources[key]) {
                                                             _context2.next = 6;
                                                             break;
                                                         }
 
-                                                        _context2.next = 5;
-                                                        return downloadImage(key);
-
-                                                    case 5:
-                                                        _context2.t0 = _context2.sent;
+                                                        _this2._resources[key] = _this2.$canvas._resources[key];
+                                                        _context2.next = 9;
+                                                        break;
 
                                                     case 6:
-                                                        _this2._resources[key] = _context2.t0;
-
-                                                        _this2.$canvas._resources[key] = _this2._resources[key];
+                                                        _context2.next = 8;
+                                                        return downloadImage(key);
 
                                                     case 8:
+                                                        _this2._resources[key] = _context2.sent;
+
+                                                    case 9:
+                                                        _this2.$canvas._resources[key] = _this2._resources[key];
+
+                                                    case 10:
                                                     case 'end':
                                                         return _context2.stop();
                                                 }

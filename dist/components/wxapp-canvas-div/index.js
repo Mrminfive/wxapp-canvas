@@ -123,6 +123,7 @@ Component({
                     lineTo: [startX, startY + border.top.width]
                 }];
 
+                ctx.save();
                 pointMap.forEach(function (item, idx) {
                     ctx.beginPath();
                     ctx.lineWidth = (border[item.key].width + item.width) * 2;
@@ -131,12 +132,14 @@ Component({
                     ctx.setStrokeStyle(border[item.key].color);
                     ctx.stroke();
                 });
+                ctx.restore();
             }
 
             function drawCorner() {
                 var sizes = [(width - border.right.width) / (height - border.bottom.width) > border.left.width / border.top.width ? [height / 2 * (border.left.width / border.top.width), height / 2] : [width / 2, width / 2 / (border.left.width / border.top.width)], (width - border.left.width) / (height - border.bottom.width) > border.right.width / border.top.width ? [height / 2 * (border.right.width / border.top.width), height / 2] : [width / 2, width / 2 / (border.right.width / border.top.width)], (width - border.left.width) / (height - border.top.width) > border.right.width / border.bottom.width ? [height / 2 * (border.right.width / border.bottom.width), height / 2] : [width / 2, width / 2 / (border.right.width / border.bottom.width)], (width - border.right.width) / (height - border.bottom.width) > border.left.width / border.top.width ? [height / 2 * (border.left.width / border.bottom.width), height / 2] : [width / 2, width / 2 / (border.left.width / border.bottom.width)]];
                 var points = [[startX, startY, startX + sizes[0][0], startY + sizes[0][1], startX + sizes[0][0], startY + height / 2, startX, startY + height / 2, border.left.color], [startX, startY, startX + sizes[0][0], startY + sizes[0][1], startX + width / 2, startY + sizes[0][1], startX + width / 2, startY, border.top.color], [startX + width, startY, startX + width - sizes[1][0], startY + sizes[1][1], startX + width / 2, startY + sizes[1][1], startX + width / 2, startY, border.top.color], [startX + width, startY, startX + width - sizes[1][0], startY + sizes[1][1], startX + width - sizes[1][0], startY + height / 2, startX + width, startY + height / 2, border.right.color], [startX + width, startY + height, startX + width - sizes[2][0], startY + height - sizes[2][1], startX + width - sizes[2][0], startY + height / 2, startX + width, startY + height / 2, border.right.color], [startX + width, startY + height, startX + width - sizes[2][0], startY + height - sizes[2][1], startX + width / 2, startY + height - sizes[2][1], startX + width / 2, startY + height, border.bottom.color], [startX, startY + height, startX + sizes[3][0], startY + height - sizes[3][1], startX + width / 2, startY + height - sizes[3][1], startX + width / 2, startY + height, border.bottom.color], [startX, startY + height, startX + sizes[3][0], startY + height - sizes[3][1], startX + sizes[3][0], startY + height / 2, startX, startY + height / 2, border.left.color]];
 
+                ctx.save();
                 points.forEach(function (setting) {
                     var _setting = _slicedToArray(setting, 9),
                         ax = _setting[0],
@@ -159,6 +162,7 @@ Component({
                     ctx.fillStyle = style;
                     ctx.fill();
                 });
+                ctx.restore();
             }
 
             function clearContent() {
@@ -203,10 +207,10 @@ Component({
                 height: containerSize.height + padding.top + padding.bottom
             };
             var resources = this._resources;
+            var self = this;
 
             drawBackgroundColor();
             drawBackgroundImage();
-
             // 背景色
             function drawBackgroundColor() {
                 ctx.fillStyle = background.color;
@@ -220,11 +224,11 @@ Component({
                 if (typeof size === 'string') {
                     switch (size) {
                         case 'auto':
-                            size = background._src ? [resources[background._src].width, resources[background._src].height] : [contentSize.width, contentSize.height];
+                            size = background._imageUrl ? [resources[background._imageUrl].width, resources[background._imageUrl].height] : [contentSize.width, contentSize.height];
                             break;
                         case 'contain':
-                            if (background._src) {
-                                var resource = resources[background._src];
+                            if (background._imageUrl) {
+                                var resource = resources[background._imageUrl];
                                 var proportion = resource.height / resource.width;
                                 var containerProportion = contentSize.height / contentSize.width;
 
@@ -259,7 +263,7 @@ Component({
                         (function () {
                             switch (background._imageType) {
                                 case 'image':
-                                    ctx.drawImage(resources[background._src].path, startX + border.left.width + size[0] * xi, startY + border.top.width + size[1] * yi, size[0], size[1]);
+                                    ctx.drawImage(resources[background._imageUrl].path, startX + border.left.width + size[0] * xi, startY + border.top.width + size[1] * yi, size[0], size[1]);
                                     break;
                                 case 'linear-gradient':
                                     var startPoint = void 0;
@@ -337,6 +341,7 @@ Component({
             };
 
             overflow !== 'hidden' && ctx.restore();
+            ctx.save();
             ctx.font = font.style + ' ' + font.weight + ' ' + font.size + 'px ' + font.family;
             ctx.fillStyle = font.color;
             ctx.textBaseline = 'middle';
@@ -347,6 +352,7 @@ Component({
                 // 这里为了实现字体设置垂直方向上的位置
                 alignMap[font.verticalAlign] * (containerSize.height - content.length * font.lineHeight));
             });
+            ctx.restore();
 
             return this;
         },

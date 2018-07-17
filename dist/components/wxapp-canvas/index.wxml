@@ -9,7 +9,7 @@
     
     <view id="wxapp-canvas-view" class="class-name wxapp-canvas-view">
         <slot></slot>
-    </view>    
+    </view>
 </view>
 
 <canvas

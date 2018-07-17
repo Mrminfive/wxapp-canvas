@@ -16,7 +16,7 @@
 
 <img src="./demo.gif" style="display: block; margin: auto;" />
 
-> 注意：项目使用 `canvasContext.measureText`、`nodesRef.fields` 等，请保持基础库 >= 1.9.10
+> 注意：项目使用 `canvasContext.measureText`、`nodesRef.fields[computedStyle]` 等，请保持基础库 >= 2.1.0
 
 ## 快速开始
 
