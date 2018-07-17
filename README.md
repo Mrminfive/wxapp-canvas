@@ -118,10 +118,14 @@
     Page({
         myMethod() {
             wx.showLoading({ title: '绘制中' });
-            this.selectComponent('#wxapp-canvas')
+            const canvas = this.selectComponent('#wxapp-canvas');
+            canvas
                 .draw()
                 .then(() => {
                     wx.hideLoading();
+                    // 执行自定义操作，如保存为图片
+
+                    canvas.getContext().anvasToTempFilePath(...)
                 });
         }
     });
