@@ -38,7 +38,7 @@
     position: absolute;
     left: 160rpx;
     top: 122rpx;
-    background: url('https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/logo.png') center no-repeat;
+    background: url('https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/example/images/logo.png') center no-repeat;
     background-size: contain;
 }
 
@@ -104,6 +104,6 @@
     position: absolute;
     bottom: 200rpx;
     left: 110rpx;
-    background: red;
+    background: url('https://raw.githubusercontent.com/Mrminfive/wxapp-canvas/develop/example/images/qrcode.png') center no-repeat;
     background-size: cover;
 }
