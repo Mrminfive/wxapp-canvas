@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "微信小程序快速绘画工具",
   "main": "index.js",
+  "miniprogram": "dist",
   "scripts": {
     "dev": "cross-env OUTPUT_DIST=./example/packages/wxapp-canvas gulp build",
     "build": "gulp build",
