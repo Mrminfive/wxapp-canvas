@@ -108,9 +108,13 @@ gulp.task('other', () => {
         .pipe(gulp.dest(OUT_DIR));
 });
 
+gulp.task('dev', ['clean'], () => {
+    gulp.start('build');
+    gulp.watch(`${FROM_DIR}/**`, ['js', 'other']);
+});
+
 gulp.task('build', ['clean'], () => {
     webpackFile(['babel-runtime/regenerator/index.js'], true);
     gulp.start('js');
     gulp.start('other');
-    gulp.watch(`${FROM_DIR}/**`, ['js', 'other']);
 });
