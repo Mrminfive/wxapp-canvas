@@ -1,6 +1,6 @@
 {
   "name": "wxapp-canvas",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "微信小程序快速绘画工具",
   "main": "index.js",
   "miniprogram": "dist",

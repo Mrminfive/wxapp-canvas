@@ -1,5 +1,12 @@
 
-<p align="center"><a href="https://github.com/Mrminfive/wxapp-canvas" rel="noopener noreferrer"><img src="./logo.png" alt="Wxapp Canvas logo"></a></p>
+<p align="center">
+    <a href="https://github.com/Mrminfive/wxapp-canvas" rel="noopener noreferrer"><img src="./logo.png" alt="Wxapp Canvas logo"></a>
+</p>
+<p align="center">
+    <a href="https://npmcharts.com/compare/wxapp-canvas?minimal=true"><img src="https://img.shields.io/npm/dm/wxapp-canvas.svg" alt="Downloads"></a>
+    <a href="https://www.npmjs.com/package/wxapp-canvas"><img src="https://img.shields.io/npm/v/wxapp-canvas.svg" alt="Version"></a>
+    <a href="https://www.npmjs.com/package/wxapp-canvas"><img src="https://img.shields.io/npm/l/wxapp-canvas.svg" alt="License"></a>
+</p>
 
 <h3 align="center">wxapp-canvas</h3>
 
@@ -27,7 +34,13 @@
 
 以原生小程序为例：
 
-1. 到 Github 下载 wxapp-canvas 的代码，将 `dist` 目录下的文件拷贝到自己的项目中，建议放置在 `packages/wxapp-canvas` 目录下。
+1. 安装 npm 依赖。
+
+    ``` shell
+    npm install --save wxapp-canvas
+    ```
+
+    或着将依赖下的 `dist` 目录下的文件拷贝到自己的项目中，建议放置在 `packages/wxapp-canvas` 目录下，组件路径根据自己项目位置配置。
 
     ``` shell
     ├─packages
@@ -43,16 +56,14 @@
         └─index
     ```
 
-2. 添加页面的 json 配置
+2. 添加页面的 json 配置（手动拷贝文件时请注意引用路径）
 
     ``` json
     "usingComponents": {
-        "wxapp-canvas": "/packages/wxapp-canvas/components/wxapp-canvas/index",
-        "wxapp-canvas-div": "/packages/wxapp-canvas/components/wxapp-canvas-div/index"
+        "wxapp-canvas": "wxapp-canvas/components/wxapp-canvas/index",
+        "wxapp-canvas-div": "wxapp-canvas/components/wxapp-canvas-div/index"
     }
     ```
-
-    组件路径根据自己项目位置配置
 
 
 3. 在 wxml 中使用组件
@@ -158,7 +169,7 @@ wxapp-canvas 允许用户扩展自定义渲染节点。
 
 2. js 脚本内容
     ``` js
-    import { behaviors } from '../../packages/wxapp-canvas/index.js';
+    import { behaviors } from 'wxapp-canvas/index.js';
 
     Component({
         externalClasses: ['class-name'],
