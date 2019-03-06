@@ -114,7 +114,7 @@
     * positioning：支持 top、left、bottom、right、z-index
     * text: 支持 text-align、vertical-align 用于节点内容位置的调节
 
-    与标准和模型不一致的有：
+    与标准盒模型不一致的有：
 
     * position 仅支持 `absolute`
     * 不支持 display
